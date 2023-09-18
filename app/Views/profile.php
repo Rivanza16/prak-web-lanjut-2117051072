@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
 
-    <link rel="stylesheet" href="<?php echo base_url('./style.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
 </head>
 <body>
 <div class="content">
-<h1>Hi!</h1>
-        <img src="<?php echo base_url('./passft.jpeg'); ?>" alt="photo profile"> <br>
+<h1>Selamat Datang!</h1>
+        <img src="<?php echo base_url('assets/img/passft.jpeg'); ?>" alt="photo profile"> <br>
 <table>
         <tr>
             <td>Nama</td>
