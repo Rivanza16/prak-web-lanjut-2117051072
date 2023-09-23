@@ -14,4 +14,4 @@ $routes->get('/', 'Home::index');
 $routes->get('/profile/(:any)/(:any)/(:any)', [Home::class, 'profile']);
 $routes->get('/user/profile', [UserController::class, 'profile']);
 $routes->get('/user/create', [UserController::class, 'create']);
-$routes->post('/user/store', [UserController::class, 'store']);
+$routes->match(['get', 'post'],'/user/store', [UserController::class, 'store']);

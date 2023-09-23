@@ -28,25 +28,55 @@
         backdrop-filter: blur(5px);"
     >
 
-        <form action="<?= base_url('/user/store') ?>" method="POST">
+    <?php $validation = \Config\Services::validation(); ?>
+     <form action="<?= base_url('/user/store') ?>" method="POST">
         <h1 style="text-align:center;">Isi Data Anda!<h1>
             <div class="mb-3 row d-flex justify-content-center">
                 <label for="nama" class="col-sm-10 col-form-label">Nama</label>
                 <div class="col-sm-10">
-                    <input name="nama" type="text" class="form-control" id="nama" required>
+                <input name="nama" type="text" id="nama" 
+                    class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid':'' ?>"  
+                    value="<?= isset($old_nama)?$old_nama:'' ?>" >
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('nama'); ?>
+                    </div>
                 </div>
             </div>
+
             <div class="mb-3 row d-flex justify-content-center">
                 <label for="npm" class="col-sm-10 col-form-label">NPM</label>
                 <div class="col-sm-10">
-                    <input name="npm" type="number" class="form-control" id="npm" required>
+                <input name="npm" type="text" id="npm"
+                     class="form-control <?= ($validation->hasError('npm'))?'is-invalid':'' ?>"  
+                     value="<?= isset($old_npm)?$old_npm:'' ?>" >
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('npm'); ?>
+                    </div>
                 </div>
             </div>
+
             <div class="mb-3 row d-flex justify-content-center">
                 <label for="kelas" class="col-sm-10 col-form-label">Kelas</label>
                 <div class="col-sm-10">
-                    <input name="kelas" type="text" class="form-control" id="kelas" rows=5 required>
+                <select name="kelas" id="kelas"  aria-label="Default select example"
+                    class="form-control <?= ($validation->hasError('kelas'))?'is-invalid':'' ?>">
+                        <option selected hidden value="<?= isset($old_kelas)?$old_kelas:'' ?>"><?= isset($old_nama_kelas)?$old_nama_kelas:'Pilih Kelas' ?></option>
+                        <?php
+                            foreach ($kelas as $item){
+                        ?>  
+                            <option value="<?= $item['id'] ?>">
+                                <?= $item['nama_kelas'] ?>
+                            </option>
+                        <?php 
+                            }
+                        ?>
+                    </select>
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('kelas'); ?>
+                    </div>
                 </div>
+            </div>
+                 <!-- <input name="kelas" type="text" class="form-control" id="kelas" rows=5 required> -->
 
             <div style='margin-top:50px'></div>
             <div class="text-center">
