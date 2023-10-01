@@ -6,36 +6,31 @@ use App\Controllers\BaseController;
 use App\Models\KelasModel;
 use App\Models\UserModel;
 
-global $kelas;
-$kelas = [
-    [
-        'id' => 1,
-        'nama_kelas' => 'A'
-    ],
-    [
-        'id' => 2,
-        'nama_kelas' => 'B'
-    ],
-    [
-        'id' => 3,
-        'nama_kelas' => 'C'
-    ],
-    [
-        'id' => 4,
-        'nama_kelas' => 'D'
-    ]
-
-];
-
 class UserController extends BaseController
 {
+    public $userModel;
+    public $kelasModel;
+    protected $helpers=['form'];
+
+    public function __construct()
+    {
+        $this->userModel= new UserModel();
+        $this->kelasModel= new KelasModel();
+        
+    }
+    
     public function index()
     {
-        //
+        $data=[
+        'title'=> 'List User',
+        'user' => $this->userModel->getUser(),
+        ];
+        return view ('list_user',$data);
     }
 
     public function profile($nama="", $kelas="", $npm=""){
         $data = [
+            
             'nama' => $nama,
             'kelas' => $kelas,
             'npm' => $npm,
@@ -45,54 +40,54 @@ class UserController extends BaseController
     }
 
     public function create(){
-        global $kelas;
+        
+        $kelas = $this->kelasModel->getKelas();
+       
         $data =[
-            'kelas' => $kelas
+            'title'=> 'Create User',
+            'kelas' => $kelas,
         ];
 
         return view('create_user', $data);
     }
 
     public function store(){
-        $kelasModel = new KelasModel();
+       
         if($this->request->getVar('kelas') != ''){
-            $kelas_select = $kelasModel->where('id', $this->request->getVar('kelas'))->first();
+            $kelas_select = $this->kelasModel->where('id', $this->request->getVar('kelas'))->first();
             $nama_kelas = $kelas_select['nama_kelas'];
         }
         else{
             $nama_kelas = '';
         }
 
-        $userModel = new UserModel();
+        // $userModel = new UserModel();
         if(!$this->validate([
             'nama' => 'required|alpha_space',
-            'npm' => 'required|is_unique[user.npm]|integer|min_length[10]',
+            'npm' => 'required|is_unique[user.npm]|integer|min_length[12]',
             'kelas' => 'required'
         ]))
             {
-            global $kelas;
-            $data = [
-                'kelas' => $kelas,
-                'validation' => $this->validator,
-                'old_nama' => $this->request->getVar('nama'),
-                'old_npm' => $this->request->getVar('npm'),
-                'old_kelas' => $this->request->getVar('kelas'),
-                'old_nama_kelas' => $nama_kelas
-            ];
-            return view('create_user', $data);
+                session()->setFlashdata('nama_kelas');
+                return redirect()->back()->withInput()->with('nama_kelas', $nama_kelas);
             }
+            
 
-        $userModel->saveUser([
+        $this->userModel->saveUser([
             'nama' => $this->request->getVar('nama'),
             'npm' => $this->request->getVar('npm'),
             'id_kelas' => $this->request->getVar('kelas'),
         ]);
         
-        $showed_data = [
-            'nama' => $this->request->getVar('nama'),
-            'npm' => $this->request->getVar('npm'),
-            'kelas' => $nama_kelas,
-        ];
-        return view('profile', $showed_data);
+        return redirect()->to('/user');
+        // $showed_data = [
+
+        //     'title'=> 'Profile',
+        //     'nama' => $this->request->getVar('nama'),
+        //     'npm' => $this->request->getVar('npm'),
+        //     'kelas' => $nama_kelas,
+        // ];
+        
+        // return view('profile', $showed_data);
     }
 }
