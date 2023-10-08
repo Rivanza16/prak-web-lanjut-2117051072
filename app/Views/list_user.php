@@ -18,11 +18,13 @@
     padding-bottom: 50px;
     overflow-x: hidden;
     overflow-y: auto;
-    ">
+    
+    <a href='<?base_url('user/create')?>"></a>
         <table class="table table-danger table-striped">
             <thead>
                 <tr>
                     <th class="col justify-content-center text-center">Id</th>
+                    <!-- <th class="col justify-content-center text-center">Foto</th> -->
                     <th class="col justify-content-center text-center">Nama</th>
                     <th class="col justify-content-center text-center">NPM</th>
                     <th class="col justify-content-center text-center">Kelas</th>
@@ -39,7 +41,9 @@
                         <td class="col justify-content-center text-center"><?= $user['npm'] ?></td>
                         <td class="col justify-content-center text-center"><?= $user['nama_kelas'] ?></td>
                         <td class="col justify-content-center text-center">
-                            <button type="button" class="btn btn-light">Edit</button>
+                            
+                            
+                            <a class="btn btn-dark" href="<?= base_url('user/'.$user['id']) ?>">Detail</a>
                             <button type="button" class="btn btn-danger">Hapus</button>
                         </td>
                     </tr>
@@ -48,7 +52,7 @@
                 ?>
             </tbody>
         </table>
-        <button type="button" class="btn btn-info">Tambah Data</button>
+        <a href="<?=base_url('/user/create')?> "class="btn btn-info">Tambah Data</a>
     </div>
 
 <?= $this->endSection() ?>

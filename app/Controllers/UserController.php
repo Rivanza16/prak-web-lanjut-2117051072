@@ -34,6 +34,7 @@ class UserController extends BaseController
             'nama' => $nama,
             'kelas' => $kelas,
             'npm' => $npm,
+            'title' =>'Profile',
         ];
 
         return view('profile',$data);
@@ -64,19 +65,29 @@ class UserController extends BaseController
         // $userModel = new UserModel();
         if(!$this->validate([
             'nama' => 'required|alpha_space',
-            'npm' => 'required|is_unique[user.npm]|integer|min_length[12]',
+            'npm' => 'required|is_unique[user.npm]|integer|min_length[10]',
             'kelas' => 'required'
         ]))
             {
                 session()->setFlashdata('nama_kelas');
                 return redirect()->back()->withInput()->with('nama_kelas', $nama_kelas);
             }
+
+        $path='assets/uploads/img/';
+        $foto=$this->request->getFile('foto');
+        $name=$foto->getRandomName();
+
+        //opload foto
+        if($foto->move($path, $name)){
+            $foto=base_url($path.$name);
+        }
             
 
         $this->userModel->saveUser([
             'nama' => $this->request->getVar('nama'),
             'npm' => $this->request->getVar('npm'),
             'id_kelas' => $this->request->getVar('kelas'),
+            'foto' => $foto
         ]);
         
         return redirect()->to('/user');
@@ -89,5 +100,14 @@ class UserController extends BaseController
         // ];
         
         // return view('profile', $showed_data);
+    }
+    public function show($id)
+    {
+        $user= $this->userModel->getUser($id);
+        $data=[
+        'title'=> 'Profile',
+        'user' => $user,
+        ];
+        return view ('profile',$data);
     }
 }

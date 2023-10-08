@@ -8,10 +8,11 @@
         top:50%;
         transform:translate(-50%, -45%);
         border-radius:15px;
+        "
     >
 
     <?php $nama_kelas = session()->getFlashdata('nama_kelas');  ?>
-     <form action="<?= base_url('/user/store') ?>" method="POST">
+     <form action="<?= base_url('/user/store') ?>" method="POST" enctype="multipart/form-data">
         <h1 style="text-align:center;">Isi Data Anda!<h1>
             <div class="mb-3 row d-flex justify-content-center">
                 <label for="nama" class="col-sm-10 col-form-label">Nama</label>
@@ -57,6 +58,18 @@
                     </select>
                     <div class="invalid-feedback">
                         <?= validation_show_error('kelas') ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 row d-flex justify-content-center">
+                <label for="foto" class="col-sm-10 col-form-label">Input Foto</label>
+                <div class="col-sm-10">
+                <input name="foto" type="file" id="foto"
+                class="form-control <?= (empty(validation_show_error('foto'))) ? '':'is-invalid' ?>"  
+                     value="<?= old('foto') ?>" >
+                        <div class="invalid-feedback">
+                        <?= validation_show_error('foto') ?>
                     </div>
                 </div>
             </div>

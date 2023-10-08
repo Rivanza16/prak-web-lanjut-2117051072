@@ -2,9 +2,11 @@
 <?=$this->section('content')?>
 <div class="content">
 <h1>Selamat Datang!</h1>
-        <img src="<?php echo base_url('assets/img/passft.jpeg'); ?>" alt="photo profile"> <br>
-        <h1><?= $nama ?></h1>
-        <p>Kelas <?= $kelas ?></p>
-        <p>NPM <?= $npm ?></p>
+<img class="photo profile" src="<?= $user['foto'] ?? base_url('/assets/img/placeholder-image.jpg') ?>" alt="">
+<br>
+<h2>-<?= $user['nama'] ?>-</h2>
+        <p>NPM : <?= $user['npm'] ?></p>
+        <p>Kelas : <?= $user['nama_kelas'] ?></p>
+        
 </div>
 <?=$this->endSection()?>
