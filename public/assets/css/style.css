@@ -62,3 +62,8 @@ img{
 .custom-font-size {
     font-size: 6px; 
 }
+
+.btn-delete{
+    display: inline-block;
+}
+
