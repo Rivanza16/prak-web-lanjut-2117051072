@@ -1,6 +1,8 @@
 <?=$this->extend('layouts/app')?>
 <?=$this->section('content')?>
-<div class="content">
+<div class="content"
+style=
+        "background-color:pink;">>
 <h1>Selamat Datang!</h1>
 <img class="photo profile" src="<?= $user['foto'] ?? base_url('/assets/img/placeholder-image.jpg') ?>" alt="">
 <br>

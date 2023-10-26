@@ -57,5 +57,13 @@ class UserModel extends Model
         // ->orderBy('user.id')
         ->findAll();
     }
+
+    public function updateUser($data,$id){
+        return $this->update ($id,$data);
+    }
+
+    public function deleteUser($id){
+        return $this->delete ($id);
+    }
 }
 
